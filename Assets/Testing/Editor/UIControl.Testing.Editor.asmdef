@@ -1,0 +1,6 @@
+{
+  "name": "UIControl.Testing.Editor",
+  "rootNamespace": "UIControl.Testing.Editor",
+  "includePlatforms": ["Editor"],
+  "autoReferenced": false
+}
