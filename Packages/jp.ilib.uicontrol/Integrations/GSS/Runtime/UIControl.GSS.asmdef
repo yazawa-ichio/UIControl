@@ -1,0 +1,19 @@
+{
+  "name": "UIControl.GSS",
+  "references": [
+    "UIControl.Runtime",
+    "GameStateStructure",
+    "UnityEngine.UI"
+  ],
+  "rootNamespace": "UIControl.GSS",
+  "defineConstraints": [
+    "UICONTROL_GSS"
+  ],
+  "versionDefines": [
+    {
+      "name": "jp.yazawa-ichio.game-state-structure",
+      "expression": "0.4.0",
+      "define": "UICONTROL_GSS"
+    }
+  ]
+}

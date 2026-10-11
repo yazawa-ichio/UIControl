@@ -1,0 +1,19 @@
+{
+  "name": "UIControl.Showcase",
+  "references": [
+    "UIControl.Runtime",
+    "UIControl.GSS",
+    "UIControl.UVMBinding",
+    "UIControl.InputSystem",
+    "GameStateStructure",
+    "UVMBinding",
+    "UVMBinding.UI",
+    "UVMBinding.TMP",
+    "UnityEngine.UI",
+    "Unity.TextMeshPro",
+    "Unity.InputSystem",
+    "UIControl.Input",
+    "UIControl.Animation"
+  ],
+  "autoReferenced": false
+}

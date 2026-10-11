@@ -1,0 +1,20 @@
+{
+  "name": "UIControl.Adoption.Editor",
+  "references": [
+    "UIControl.Adoption",
+    "UIControl.Runtime",
+    "UIControl.UVMBinding",
+    "UIControl.InputSystem",
+    "UVMBinding",
+    "UVMBinding.UI",
+    "UnityEngine.UI",
+    "Unity.InputSystem",
+    "UIControl.LitMotion",
+    "UIControl.Input",
+    "UIControl.Animation"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "autoReferenced": false
+}

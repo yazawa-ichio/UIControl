@@ -1,0 +1,20 @@
+{
+  "name": "UIControl.InputExamples",
+  "references": [
+    "UIControl.Runtime",
+    "UIControl.InputSystem",
+    "Unity.InputSystem",
+    "UnityEngine.UI",
+    "UIControl.Input"
+  ],
+  "defineConstraints": [
+    "UICONTROL_INPUT_SYSTEM"
+  ],
+  "versionDefines": [
+    {
+      "name": "com.unity.inputsystem",
+      "expression": "1.4.0",
+      "define": "UICONTROL_INPUT_SYSTEM"
+    }
+  ]
+}

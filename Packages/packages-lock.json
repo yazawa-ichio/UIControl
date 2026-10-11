@@ -1,5 +1,23 @@
 {
   "dependencies": {
+    "com.annulusgames.lit-motion": {
+      "version": "https://github.com/annulusgames/LitMotion.git?path=src/LitMotion/Assets/LitMotion#ab6e92bfe78ff911def2fd3c4e9c79bb5a186946",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.burst": "1.6.0",
+        "com.unity.collections": "1.5.1",
+        "com.unity.mathematics": "1.0.1"
+      },
+      "hash": "ab6e92bfe78ff911def2fd3c4e9c79bb5a186946"
+    },
+    "com.cysharp.unitask": {
+      "version": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask#f9fd769be7c634610f2a61aa914a1a55f34740e1",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "f9fd769be7c634610f2a61aa914a1a55f34740e1"
+    },
     "com.unity.2d.animation": {
       "version": "13.0.5",
       "depth": 0,
@@ -101,7 +119,7 @@
     },
     "com.unity.burst": {
       "version": "1.8.29",
-      "depth": 2,
+      "depth": 1,
       "source": "registry",
       "dependencies": {
         "com.unity.mathematics": "1.2.1",
@@ -179,9 +197,30 @@
     },
     "com.unity.nuget.mono-cecil": {
       "version": "1.11.6",
-      "depth": 2,
+      "depth": 1,
       "source": "registry",
       "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.nuget.newtonsoft-json": {
+      "version": "3.2.2",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.pipeline": {
+      "version": "0.8.0-exp.1",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.test-framework": "1.1.33",
+        "com.unity.nuget.mono-cecil": "1.11.6",
+        "com.unity.modules.uielements": "1.0.0",
+        "com.unity.modules.jsonserialize": "1.0.0",
+        "com.unity.modules.screencapture": "1.0.0",
+        "com.unity.nuget.newtonsoft-json": "3.0.2"
+      },
       "url": "https://packages.unity.com"
     },
     "com.unity.render-pipelines.core": {
@@ -282,6 +321,30 @@
         "com.unity.modules.jsonserialize": "1.0.0"
       },
       "url": "https://packages.unity.com"
+    },
+    "jp.ilib.uicontrol": {
+      "version": "file:jp.ilib.uicontrol",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.unity.ugui": "2.0.0"
+      }
+    },
+    "jp.ilib.uvmb": {
+      "version": "https://github.com/yazawa-ichio/UVMBinding.git?path=Unity/Assets/UVMBinding#v0.1.0",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.nuget.mono-cecil": "1.11.6"
+      },
+      "hash": "0810c000e97acd2065f227471a7a29803ea3704d"
+    },
+    "jp.yazawa-ichio.game-state-structure": {
+      "version": "https://github.com/yazawa-ichio/GameStateStructure.git?path=Packages/jp.yazawa-ichio.game-state-structure#0.4.1",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "53a9509ccfb1bc7de7a7fe143539572377c0c95c"
     },
     "com.unity.modules.accessibility": {
       "version": "1.0.0",

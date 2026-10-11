@@ -1,0 +1,12 @@
+{
+  "name": "UIControl.Editor",
+  "rootNamespace": "UIControl.Editor",
+  "references": [
+    "UIControl.Runtime",
+    "UnityEngine.UI",
+    "UIControl.Animation"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ]
+}

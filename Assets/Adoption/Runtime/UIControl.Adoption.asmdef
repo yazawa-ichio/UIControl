@@ -1,0 +1,15 @@
+{
+  "name": "UIControl.Adoption",
+  "references": [
+    "UIControl.Runtime",
+    "UIControl.UVMBinding",
+    "UVMBinding",
+    "UVMBinding.UI",
+    "UnityEngine.UI",
+    "Unity.InputSystem",
+    "UIControl.QueuedPages",
+    "UIControl.Input",
+    "UIControl.Animation"
+  ],
+  "autoReferenced": false
+}

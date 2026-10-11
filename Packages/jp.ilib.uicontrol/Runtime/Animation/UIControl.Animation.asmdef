@@ -1,0 +1,8 @@
+{
+  "name": "UIControl.Animation",
+  "rootNamespace": "UIControl",
+  "references": [
+    "UIControl.Runtime",
+    "UnityEngine.UI"
+  ]
+}
