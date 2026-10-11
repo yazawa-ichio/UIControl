@@ -1,0 +1,23 @@
+{
+  "name": "UIControl.Showcase.Editor",
+  "references": [
+    "UIControl.Showcase",
+    "UIControl.Runtime",
+    "UIControl.InputSystem",
+    "UIControl.LitMotion",
+    "UIControl.UVMBinding",
+    "GameStateStructure",
+    "UVMBinding",
+    "UVMBinding.UI",
+    "UVMBinding.TMP",
+    "UnityEngine.UI",
+    "Unity.TextMeshPro",
+    "Unity.InputSystem",
+    "UIControl.Input",
+    "UIControl.Animation"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "autoReferenced": false
+}
