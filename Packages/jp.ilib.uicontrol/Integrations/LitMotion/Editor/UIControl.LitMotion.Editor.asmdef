@@ -1,0 +1,19 @@
+{
+  "name": "UIControl.LitMotion.Editor",
+  "references": [
+    "UIControl.LitMotion"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "defineConstraints": [
+    "UICONTROL_LITMOTION"
+  ],
+  "versionDefines": [
+    {
+      "name": "com.annulusgames.lit-motion",
+      "expression": "2.0.2",
+      "define": "UICONTROL_LITMOTION"
+    }
+  ]
+}

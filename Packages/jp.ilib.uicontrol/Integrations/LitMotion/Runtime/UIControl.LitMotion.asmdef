@@ -1,0 +1,20 @@
+{
+  "name": "UIControl.LitMotion",
+  "rootNamespace": "UIControl.LitMotion",
+  "references": [
+    "UIControl.Runtime",
+    "LitMotion",
+    "UnityEngine.UI",
+    "UIControl.Animation"
+  ],
+  "defineConstraints": [
+    "UICONTROL_LITMOTION"
+  ],
+  "versionDefines": [
+    {
+      "name": "com.annulusgames.lit-motion",
+      "expression": "2.0.2",
+      "define": "UICONTROL_LITMOTION"
+    }
+  ]
+}
