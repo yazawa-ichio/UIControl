@@ -1,0 +1,27 @@
+{
+  "name": "UIControl.InputSystem.Tests",
+  "rootNamespace": "UIControl.InputSystem.Tests",
+  "references": [
+    "UIControl.Runtime",
+    "UIControl.InputSystem",
+    "Unity.InputSystem",
+    "UnityEngine.TestRunner",
+    "UnityEditor.TestRunner",
+    "UnityEngine.UI",
+    "UIControl.Input",
+    "UIControl.Animation"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": true,
+  "precompiledReferences": [
+    "nunit.framework.dll"
+  ],
+  "autoReferenced": false,
+  "defineConstraints": [
+    "UNITY_INCLUDE_TESTS"
+  ],
+  "versionDefines": [],
+  "noEngineReferences": false
+}
