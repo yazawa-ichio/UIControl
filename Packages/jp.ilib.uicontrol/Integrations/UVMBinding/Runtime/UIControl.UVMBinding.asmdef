@@ -1,0 +1,20 @@
+{
+  "name": "UIControl.UVMBinding",
+  "references": [
+    "UIControl.Runtime",
+    "UIControl.Animation",
+    "UVMBinding",
+    "UnityEngine.UI"
+  ],
+  "rootNamespace": "UIControl.UVMBinding",
+  "defineConstraints": [
+    "UICONTROL_UVMBINDING"
+  ],
+  "versionDefines": [
+    {
+      "name": "jp.ilib.uvmb",
+      "expression": "0.1.0",
+      "define": "UICONTROL_UVMBINDING"
+    }
+  ]
+}
