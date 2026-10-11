@@ -1,0 +1,22 @@
+{
+  "name": "jp.ilib.uicontrol",
+  "version": "0.1.0-preview.1",
+  "displayName": "UIControl",
+  "description": "Prefab-authored UI state animation and screen control. Optional integrations (Input System, LitMotion, GameStateStructure, UVMBinding) are enabled by Version Defines. Development preview.",
+  "unity": "6000.3",
+  "dependencies": {
+    "com.unity.ugui": "2.0.0"
+  },
+  "samples": [
+    {
+      "displayName": "Queued Pages",
+      "description": "Application-side FIFO display requests using PageHandle. No result protocol is required by UIStack.",
+      "path": "Samples~/QueuedPages"
+    },
+    {
+      "displayName": "Queued Dialogs",
+      "description": "IViewModel, queued results, nine reward rows and Prefab-authored animations. Requires the Queued Pages sample, UVMBinding, Input System and LitMotion 2.0.2 or later.",
+      "path": "Samples~/QueuedDialogs"
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+{
+  "name": "UIControl.Runtime",
+  "rootNamespace": "UIControl",
+  "references": ["UnityEngine.UI", "Unity.TextMeshPro"]
+}
