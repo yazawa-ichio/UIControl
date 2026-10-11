@@ -17,4 +17,9 @@ test-results*.xml
 skills-lock.json
 Assets/InitTestScene*.unity
 Assets/InitTestScene*.unity.meta
-out
+# Temporary assets owned by PrefabAuthoringBaselineTests (cleaned on normal teardown).
+Assets/__UIControlTestTemp_*
+tools/__pycache__/
+
+# IDE
+.idea/
