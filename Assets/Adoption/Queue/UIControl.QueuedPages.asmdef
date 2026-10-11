@@ -1,0 +1,7 @@
+{
+  "name": "UIControl.QueuedPages",
+  "references": [
+    "UIControl.Runtime"
+  ],
+  "autoReferenced": false
+}
