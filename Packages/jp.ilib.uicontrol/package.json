@@ -1,8 +1,8 @@
 {
   "name": "jp.ilib.uicontrol",
-  "version": "0.1.0-preview.1",
+  "version": "0.1.0",
   "displayName": "UIControl",
-  "description": "Prefab-authored UI state animation and screen control. Optional integrations (Input System, LitMotion, GameStateStructure, UVMBinding) are enabled by Version Defines. Development preview.",
+  "description": "Prefab-authored UI state animation and screen control. Optional integrations (Input System, LitMotion, GameStateStructure, UVMBinding) are enabled by Version Defines.",
   "unity": "6000.3",
   "dependencies": {
     "com.unity.ugui": "2.0.0"
