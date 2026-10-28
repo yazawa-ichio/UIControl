@@ -12,6 +12,8 @@ FocusScopeは登録されただけでは操作対象になりません。`Activa
 
 遷移中など一時的に操作できない間も所属は失わず、操作できるようになると同じ選択へ戻ります。管理中のSelectableは標準のNavigationを一時的にNoneにし、管理を離れると戻します。
 
+既定ではPointer方式の間は選択を持たず、マウスで押したボタンも選ばれません。マウスとPadを同時に使う画面では`Select On Pointer`をONにします。押した対象を選び、Pointer方式の間も選択を保ち、Navigationへ戻るとそこから続けます。PointerSelectionを使う場合は`Clear Selection On Pointer Move`をOFFにします。
+
 ## UIFocus
 
 選択の調停の入口（static）です。EventSystemの選択を書くのはここだけです。
@@ -78,7 +80,7 @@ Moduleには通常どおりUIのInput Actionを指定し、Send Navigation Event
 - **Hoverの解除**（`Park Pointer On Navigation`、既定ON）：Navigationへ移る時、実マウスと仮想マウスの位置をデバイスの状態だけ画面外へ置き、最後に居たボタンのHoverを消します。OSカーソルは動きません。
 - **位置の報告**（`Follow Selection In Navigation`、既定ON）：Navigation中は選択中のSelectable内の点を`Position`として報告します。位置は`Selection Anchor`（中心か四隅）、`Selection Inset`（四隅を中心へ寄せる画面ピクセル、既定8）、`Selection Offset`で決めます。ボタンごとに決めたい時は、そのボタンか配下に`PointerAnchor`を置くと、そのRectTransformの中心が優先されます。Source = RouterのPointerFollowerは、Pad操作中は選択に付いて動きます。
 
-PointerSelectionの`Clear Selection On Pointer Move`（既定ON）はPointer中に通常ボタンの選択を外します。`Select Nearest On Navigation`（既定OFF）は、未選択でNavigationへ戻る時に入力方向側の近い候補から選択を始めます。
+PointerSelectionの`Clear Selection On Pointer Move`（既定ON）はマウスを動かした時に通常ボタンの選択を外します。`Select Nearest On Navigation`（既定OFF）は、未選択でNavigationへ戻る時に入力方向側の近い候補から選択を始めます。
 
 ### 仮想マウス
 

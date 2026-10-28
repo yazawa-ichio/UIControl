@@ -93,7 +93,7 @@ namespace UIControl
 
 		public void OnPointerDown(PointerEventData eventData)
 		{
-			if (eventData.button == PointerEventData.InputButton.Left && Scope != null) { UIFocus.Arbiter.NotifyInputMode(FocusInputMode.Pointer); }
+			if (eventData.button == PointerEventData.InputButton.Left && Scope != null) { UIFocus.Arbiter.PointerPressed(this); }
 		}
 
 		public void OnSelect(BaseEventData eventData)

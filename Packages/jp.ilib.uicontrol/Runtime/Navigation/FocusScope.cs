@@ -25,6 +25,8 @@ namespace UIControl
 		private bool m_CollectSelectables = true;
 		[SerializeField, Tooltip("この配下のSelectableは候補にしない（自動収集・NavigationNodeのどちらも）。")]
 		private Transform[] m_Exclude = Array.Empty<Transform>();
+		[SerializeField, Tooltip("マウス等で押した配下の対象を選択し、Pointer方式の間も選択を保つ。Navigationへ戻るとそこから続ける。OFFではPointer中は選択を持たない。")]
+		private bool m_SelectOnPointer;
 		private bool m_Dirty = true;
 		internal readonly List<NavigationNode> Nodes = new List<NavigationNode>();
 		internal NavigationNode LastSelectedNode;
@@ -34,6 +36,8 @@ namespace UIControl
 		public bool RestoreLast => m_RestoreLast;
 		/// <summary>配下のSelectableを自動で候補にするか。OFFではNavigationNodeを付けた対象だけ。</summary>
 		public bool CollectSelectables { get => m_CollectSelectables; set { if (m_CollectSelectables != value) { m_CollectSelectables = value; Invalidate(); } } }
+		/// <summary>押した対象を選択し、Pointer方式の間も選択を保つか。既定OFF。</summary>
+		public bool SelectOnPointer { get => m_SelectOnPointer; set => m_SelectOnPointer = value; }
 		/// <summary>候補にしない配下。</summary>
 		public IReadOnlyList<Transform> Exclude => m_Exclude;
 		/// <summary>最後に選んでいた対象。</summary>

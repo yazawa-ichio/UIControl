@@ -282,10 +282,28 @@ namespace UIControl
 			else if (BindEventSystem())
 			{
 				GameObject selected = m_Events.currentSelectedGameObject;
-				if (selected != null && Owns(selected) && !IsTextInput(selected)) { m_Events.SetSelectedGameObject(null); }
+				if (selected != null && Owns(selected) && !IsTextInput(selected) && !KeepsPointerSelection(selected)) { m_Events.SetSelectedGameObject(null); }
 			}
 			Revision++;
 			Reconcile();
+		}
+
+		/// <summary>
+		/// 管理下の対象がPointerで押された。uGUIはNavigation.Mode.Noneの対象を押しても選ばないため、
+		/// Select On PointerのScopeではここで選ぶ（EventSystemの選択を書くのは調停器だけ）。
+		/// </summary>
+		internal void PointerPressed(NavigationNode node)
+		{
+			// 選べない対象（低Priority、無効、占有中など）は通常どおりPointerへ移るだけ。
+			if (node.Scope == null || !node.Scope.SelectOnPointer || !CanSelect(node)) { NotifyInputMode(FocusInputMode.Pointer); return; }
+			if (InputMode != FocusInputMode.Pointer) { InputMode = FocusInputMode.Pointer; Revision++; }
+			RequestSelect(node);
+		}
+
+		private static bool KeepsPointerSelection(GameObject selected)
+		{
+			NavigationNode node = selected.GetComponent<NavigationNode>();
+			return node != null && node.Scope != null && node.Scope.SelectOnPointer;
 		}
 
 		private static bool IsTextInput(GameObject selected)

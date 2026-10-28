@@ -19,6 +19,7 @@
 | --- | --- |
 | どのボタンも押せない | EventSystem、GraphicRaycaster、Raycast Target、前面の遮断Graphic |
 | 画面だけ押せない | 上端のLiveなPageか、遷移中でないか（`Page.IsInputAllowed`） |
+| マウスで押したボタンが選ばれない | 既定の動作。FocusScopeの`Select On Pointer`をONにする（PointerSelectionは`Clear Selection On Pointer Move`をOFF） |
 | Padで選択が付かない | Scopeが`Activate()`されているか。Page.Focus、Priority、Collect Selectables / Exclude |
 | 生成した行が選べない | 行にNavigationNodeを付けるか、生成後に`scope.Refresh()` |
 | NavigationNodeの方向に動かない | 付けた対象は候補が空の方向へ動かない。Automaticを明示する |

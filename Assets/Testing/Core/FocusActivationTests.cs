@@ -121,5 +121,65 @@ namespace UIControl.Tests
 				"上端に戻っても選択が戻らない。selected=" + (EventSystem.current.currentSelectedGameObject == null
 					? "(なし)" : EventSystem.current.currentSelectedGameObject.name));
 		}
+
+		private static GameObject AddButton(FocusScope scope, string name)
+		{
+			GameObject buttonObject = new GameObject(name, typeof(RectTransform));
+			buttonObject.transform.SetParent(scope.transform, false);
+			buttonObject.AddComponent<UnityEngine.UI.Image>();
+			buttonObject.AddComponent<UnityEngine.UI.Button>();
+			return buttonObject;
+		}
+
+		private static void PressLeft(GameObject target)
+		{
+			var pointer = new PointerEventData(EventSystem.current) { button = PointerEventData.InputButton.Left };
+			ExecuteEvents.Execute(target, pointer, ExecuteEvents.pointerDownHandler);
+		}
+
+		/// <summary>既定ではPointer中は選択を持たない（押してもuGUIは選ばず、調停器も選ばない）。</summary>
+		[UnityTest]
+		public IEnumerator 既定では押した対象を選ばない()
+		{
+			FocusScope scope = null;
+			yield return OpenWithScope("A", (_, s) => scope = s);
+			AddButton(scope, "First");
+			GameObject second = AddButton(scope, "Second");
+			Assert.That(scope.Activate(), Is.True);
+			yield return null;
+
+			PressLeft(second);
+			yield return null;
+			Assert.That(UIFocus.InputMode, Is.EqualTo(FocusInputMode.Pointer));
+			Assert.That(EventSystem.current.currentSelectedGameObject, Is.Null, "既定ではPointer中に選択を持たない");
+		}
+
+		/// <summary>Select On Pointerでは押した対象を選び、Pointer中も保ち、Navigationへ戻るとそこから続ける。</summary>
+		[UnityTest]
+		public IEnumerator SelectOnPointerでは押した対象を選んで保つ()
+		{
+			FocusScope scope = null;
+			yield return OpenWithScope("A", (_, s) => scope = s);
+			scope.SelectOnPointer = true;
+			AddButton(scope, "First");
+			GameObject second = AddButton(scope, "Second");
+			Assert.That(scope.Activate(), Is.True);
+			yield return null;
+			Assert.That(EventSystem.current.currentSelectedGameObject, Is.Not.EqualTo(second), "前提: 最初は別の対象が選ばれている");
+
+			PressLeft(second);
+			yield return null;
+			Assert.That(UIFocus.InputMode, Is.EqualTo(FocusInputMode.Pointer));
+			Assert.That(EventSystem.current.currentSelectedGameObject, Is.EqualTo(second), "押した対象が選ばれる");
+
+			UIFocus.NotifyInputMode(FocusInputMode.Navigation);
+			UIFocus.NotifyInputMode(FocusInputMode.Pointer);
+			yield return null;
+			Assert.That(EventSystem.current.currentSelectedGameObject, Is.EqualTo(second), "Pointerへの切り替えで外さない");
+
+			UIFocus.NotifyInputMode(FocusInputMode.Navigation);
+			yield return null;
+			Assert.That(EventSystem.current.currentSelectedGameObject, Is.EqualTo(second), "Navigationへ戻ると押した対象から続ける");
+		}
 	}
 }
