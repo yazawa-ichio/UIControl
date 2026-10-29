@@ -554,6 +554,12 @@ namespace UIControl
 		{
 			if (!CanSelect(current)) { return null; }
 			IReadOnlyList<NavigationCandidate> candidates = current.Candidates(direction);
+			// Scopeが自動で付けたNodeは候補を持たない。全方向をAutomaticとして扱う。
+			if (candidates.Count == 0 && current.IsAuto)
+			{
+				NavigationNode automatic = ResolveAutomatic(current, direction, null);
+				return automatic != current && CanSelect(automatic) ? automatic : null;
+			}
 			for (int i = 0; i < candidates.Count; i++)
 			{
 				NavigationCandidate candidate = candidates[i];

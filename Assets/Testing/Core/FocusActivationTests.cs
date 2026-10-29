@@ -181,5 +181,35 @@ namespace UIControl.Tests
 			yield return null;
 			Assert.That(EventSystem.current.currentSelectedGameObject, Is.EqualTo(second), "Navigationへ戻ると押した対象から続ける");
 		}
+
+		private static void Move(GameObject target, MoveDirection direction)
+		{
+			var axis = new AxisEventData(EventSystem.current) { moveDir = direction };
+			ExecuteEvents.Execute(target, axis, ExecuteEvents.moveHandler);
+		}
+
+		/// <summary>Scopeが自動で付けたNodeは、候補を書かなくても全方向がAutomaticとして動く。</summary>
+		[UnityTest]
+		public IEnumerator 自動で付いたNodeは配置から移動する()
+		{
+			FocusScope scope = null;
+			yield return OpenWithScope("A", (_, s) => scope = s);
+			GameObject top = AddButton(scope, "Top");
+			GameObject bottom = AddButton(scope, "Bottom");
+			((RectTransform)top.transform).anchoredPosition = new Vector2(0, 150);
+			((RectTransform)bottom.transform).anchoredPosition = new Vector2(0, -150);
+			Assert.That(scope.Activate(), Is.True);
+			yield return null;
+			Assert.That(EventSystem.current.currentSelectedGameObject, Is.EqualTo(top), "前提: Hierarchy順で最初の対象");
+			Assert.That(top.GetComponent<NavigationNode>().IsAuto, Is.True, "前提: Scopeが自動で付けたNode");
+
+			Move(top, MoveDirection.Down);
+			yield return null;
+			Assert.That(EventSystem.current.currentSelectedGameObject, Is.EqualTo(bottom), "下の対象へ移る");
+
+			Move(bottom, MoveDirection.Down);
+			yield return null;
+			Assert.That(EventSystem.current.currentSelectedGameObject, Is.EqualTo(bottom), "進行方向に候補が無ければ留まる");
+		}
 	}
 }
