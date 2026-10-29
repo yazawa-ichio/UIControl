@@ -42,7 +42,7 @@ FocusScopeは登録されただけでは操作対象になりません。`Activa
 | Automatic | 配置から進行方向の候補を探す（空欄は現在のScope） |
 | Resolver | NavigationResolver（リスト順など独自の規則） |
 
-NavigationNodeを付けない対象は全方向がAutomaticです。付けた対象は**候補が空の方向には移動しない**ので、Automaticも明示して追加します。`Exclude From Automatic`をONにした対象は自動探索の到達先になりません。SliderとScrollbarは自身の軸を、編集中の入力欄は矢印を優先します。
+NavigationNodeを付けない対象は全方向がAutomaticです。付けた対象は**候補が空の方向には移動しない**ので、Automaticも明示して追加します。`Exclude From Automatic`をONにした対象は自動探索の到達先になりません。Automaticは画面座標で探すので、uGUIの自動Navigation（ワールド座標で全Selectableから探す）と同じ行き先になるとは限りません。揃えたい所はNavigationResolverで決めます。SliderとScrollbarは自身の軸を、編集中の入力欄は矢印を優先します。
 
 ## タブとリスト
 
