@@ -39,7 +39,12 @@ namespace UIControl.InputSystem
 		private void OnDisable() { Unbind(); }
 		private void OnMove(InputAction.CallbackContext context)
 		{
-			if (context.ReadValue<Vector2>().sqrMagnitude > 0) { UIFocus.NotifyInputMode(FocusInputMode.Navigation); }
+			Vector2 value = context.ReadValue<Vector2>();
+			if (value.sqrMagnitude <= 0) { return; }
+			MoveDirection direction = Mathf.Abs(value.x) > Mathf.Abs(value.y)
+				? value.x > 0 ? MoveDirection.Right : MoveDirection.Left
+				: value.y > 0 ? MoveDirection.Up : MoveDirection.Down;
+			UIFocus.NotifyMove(direction);
 		}
 		private void OnClick(InputAction.CallbackContext context)
 		{

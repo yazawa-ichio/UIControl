@@ -211,5 +211,56 @@ namespace UIControl.Tests
 			yield return null;
 			Assert.That(EventSystem.current.currentSelectedGameObject, Is.EqualTo(bottom), "進行方向に候補が無ければ留まる");
 		}
+
+		/// <summary>既定では、選択が空になると次の整合で戻す。</summary>
+		[UnityTest]
+		public IEnumerator 既定では空になった選択を戻す()
+		{
+			FocusScope scope = null;
+			yield return OpenWithScope("A", (_, s) => scope = s);
+			GameObject first = AddButton(scope, "First");
+			Assert.That(scope.Activate(), Is.True);
+			yield return null;
+			Assert.That(EventSystem.current.currentSelectedGameObject, Is.EqualTo(first), "前提: 選択が付いている");
+
+			UIFocus.Deselect(first);
+			scope.Refresh();
+			yield return null;
+			Assert.That(EventSystem.current.currentSelectedGameObject, Is.EqualTo(first), "整合で戻る");
+		}
+
+		/// <summary>Restore On EmptyがOFFなら、空・無効になった選択を戻さず、次の方向入力から始める。</summary>
+		[UnityTest]
+		public IEnumerator RestoreOnEmptyがOFFなら方向入力まで空のまま()
+		{
+			FocusScope scope = null;
+			yield return OpenWithScope("A", (_, s) => scope = s);
+			scope.RestoreOnEmpty = false;
+			GameObject first = AddButton(scope, "First");
+			GameObject second = AddButton(scope, "Second");
+			Assert.That(scope.Activate(), Is.True, "有効化は明示の要求なので選ぶ");
+			yield return null;
+			Assert.That(EventSystem.current.currentSelectedGameObject, Is.EqualTo(first), "前提: 選択が付いている");
+
+			UIFocus.Deselect(first);
+			scope.Refresh();
+			yield return null;
+			yield return null;
+			Assert.That(EventSystem.current.currentSelectedGameObject, Is.Null, "空にした選択を戻さない");
+			Assert.That(UIFocus.Current, Is.EqualTo(scope), "Scopeは操作対象のまま");
+
+			UIFocus.NotifyMove(MoveDirection.Down);
+			yield return null;
+			Assert.That(EventSystem.current.currentSelectedGameObject, Is.EqualTo(first), "方向入力で前回の選択から始める");
+
+			first.GetComponent<UnityEngine.UI.Button>().interactable = false;
+			yield return null;
+			yield return null;
+			Assert.That(EventSystem.current.currentSelectedGameObject, Is.Null, "無効になった選択は外し、別の対象へ移さない");
+
+			UIFocus.NotifyMove(MoveDirection.Down);
+			yield return null;
+			Assert.That(EventSystem.current.currentSelectedGameObject, Is.EqualTo(second), "方向入力で選べる対象から始める");
+		}
 	}
 }

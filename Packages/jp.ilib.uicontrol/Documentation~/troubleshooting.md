@@ -23,6 +23,8 @@
 | Padで選択が付かない | Scopeが`Activate()`されているか。Page.Focus、Priority、Collect Selectables / Exclude |
 | 生成した行が選べない | 行にNavigationNodeを付けるか、生成後に`scope.Refresh()` |
 | NavigationNodeの方向に動かない | 付けた対象は候補が空の方向へ動かない。Automaticを明示する |
+| 選択を外しても戻ってくる | 既定の動作。FocusScopeの`Restore On Empty`をOFFにする |
+| 未選択のまま方向入力しても選ばれない | 独自の入力元では`UIFocus.NotifyMove`を呼ぶ |
 | Back / Menuが呼ばれない | 派生型と`TryInvoke<T>()`の型、Probeの位置が露出しているか |
 | テストで選択が戻らない | 入力方式はstaticに残る。`UIFocus.NotifyInputMode`で宣言する |
 

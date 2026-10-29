@@ -21,6 +21,8 @@ namespace UIControl
 		[SerializeField] private int m_Priority;
 		[SerializeField, Tooltip("再び操作対象になった時、最後に選んでいた対象へ戻す。")]
 		private bool m_RestoreLast = true;
+		[SerializeField, Tooltip("選択が空・無効になった時、自動で選択を戻す。OFFでは次の方向入力（UIFocus.NotifyMove）か、Activate / RequestSelect / RequestRestoreまで空のまま。")]
+		private bool m_RestoreOnEmpty = true;
 		[SerializeField, Tooltip("配下のSelectableを自動で候補にし、NavigationNodeが無ければ付ける。OFFではNavigationNodeを付けた対象だけを候補にする。")]
 		private bool m_CollectSelectables = true;
 		[SerializeField, Tooltip("この配下のSelectableは候補にしない（自動収集・NavigationNodeのどちらも）。")]
@@ -34,6 +36,8 @@ namespace UIControl
 		public IReadOnlyList<Selectable> Fallbacks => m_Fallbacks;
 		public int Priority { get => m_Priority; set { m_Priority = value; UIFocus.Reconcile(); } }
 		public bool RestoreLast => m_RestoreLast;
+		/// <summary>選択が空・無効になった時に自動で戻すか。既定ON。OFFでは明示の要求か方向入力まで空のまま。</summary>
+		public bool RestoreOnEmpty { get => m_RestoreOnEmpty; set => m_RestoreOnEmpty = value; }
 		/// <summary>配下のSelectableを自動で候補にするか。OFFではNavigationNodeを付けた対象だけ。</summary>
 		public bool CollectSelectables { get => m_CollectSelectables; set { if (m_CollectSelectables != value) { m_CollectSelectables = value; Invalidate(); } } }
 		/// <summary>押した対象を選択し、Pointer方式の間も選択を保つか。既定OFF。</summary>

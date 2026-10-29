@@ -56,6 +56,7 @@ namespace UIControl.InputSystem
 		private bool m_Changing;
 		private UIInputMode? m_RequestedMode;
 		private bool m_WaitForNavigationRelease;
+		private bool m_NavigationMoveHeld;
 		private Vector2 m_Position;
 		public UIInputMode Mode { get; private set; } = UIInputMode.Mouse;
 		public Vector2 Position => m_Position;
@@ -123,6 +124,7 @@ namespace UIControl.InputSystem
 			m_Events = null;
 			m_ActiveMouse = null;
 			m_WaitForNavigationRelease = false;
+			m_NavigationMoveHeld = false;
 			m_HasNavigationPosition = false;
 		}
 
@@ -157,6 +159,10 @@ namespace UIControl.InputSystem
 			m_HasNavigationPosition = Mode == UIInputMode.Navigation && m_FollowSelectionInNavigation && ScreenPoint.TryGetSelectedPoint(m_SelectionAnchor, m_SelectionInset, m_SelectionOffset, out selected);
 			if (m_HasNavigationPosition) { m_Position = selected; }
 			if (m_WaitForNavigationRelease && Read(m_NavigationMove).sqrMagnitude <= m_StickThreshold * m_StickThreshold) { m_WaitForNavigationRelease = false; }
+			// 未選択の間はModuleのMoveがどこへも届かない。押し始めをUIFocusへ伝え、選択を始めさせる。
+			bool moveHeld = Mode == UIInputMode.Navigation && Active(m_NavigationMove);
+			if (moveHeld && !m_NavigationMoveHeld) { UIFocus.NotifyMove(Direction(Read(m_NavigationMove))); }
+			m_NavigationMoveHeld = moveHeld;
 			// 方向入力をカーソル移動にも使う構成があるため、Navigation以外ではModuleのMove / Submit / Cancelを下ろす。
 			m_Events.sendNavigationEvents = m_OriginalNavigation && Mode == UIInputMode.Navigation && !m_WaitForNavigationRelease;
 			// 仮想マウスの決定は、仮想マウスで操作している間だけ左クリックにする。Navigation中はModuleのSubmit、実マウス中は何もしない。

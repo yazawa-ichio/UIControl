@@ -26,6 +26,8 @@ namespace UIControl
 
 		/// <summary>入力方式の通知。Pointer中は自動選択を行わず、Navigationへ戻ると復元する。</summary>
 		public static void NotifyInputMode(FocusInputMode mode) { Arbiter.NotifyInputMode(mode); }
+		/// <summary>方向入力の通知。Navigationへ切り替え、未選択ならそのフレームの終わりに現在Scopeの復元先から選択を始める。</summary>
+		public static void NotifyMove(MoveDirection direction) { Arbiter.NotifyMove(direction); }
 		/// <summary>ナビゲーションを占有する。占有中は選択の移動と復元を止める。Drag中などに使う。</summary>
 		public static IDisposable OccupyNavigation() { return Arbiter.OccupyNavigation(); }
 		/// <summary>選択の確定を遅らせる。複数の変更をまとめてから1回で整合を取る。</summary>
@@ -73,6 +75,7 @@ namespace UIControl
 		private int m_Occupancy;
 		private bool m_ExplicitActivation;
 		private bool m_SuppressAutomaticSelection;
+		private bool m_MoveRequested;
 		private NavigationNode m_Selected;
 		private FocusScope m_LastScope;
 		private Transform m_LastParent;
@@ -163,6 +166,11 @@ namespace UIControl
 		/// <summary>毎フレームの再構築はしない。変更通知があった時と、選択中の対象が無効になった時だけ整合を取る。</summary>
 		internal void LateUpdate()
 		{
+			if (m_MoveRequested)
+			{
+				m_MoveRequested = false;
+				if (RestoreOnMove()) { return; }
+			}
 			if (m_Dirty || m_ReconcileAgain) { Reconcile(); return; }
 			NavigationNode selected = SelectedNode;
 			if (selected != null && selected.Scope != null && m_Registrations.ContainsKey(selected.Scope) && !IsValid(selected)) { Reconcile(); }
@@ -298,6 +306,24 @@ namespace UIControl
 			if (node.Scope == null || !node.Scope.SelectOnPointer || !CanSelect(node)) { NotifyInputMode(FocusInputMode.Pointer); return; }
 			if (InputMode != FocusInputMode.Pointer) { InputMode = FocusInputMode.Pointer; Revision++; }
 			RequestSelect(node);
+		}
+
+		/// <summary>
+		/// 方向入力があった。uGUIは未選択の間Moveをどこへも送らないため、入力側から通知を受けて選択を始める。
+		/// 復元はLateUpdateまで遅らせる。同じフレームのModuleのMoveが復元した選択へ届き、二歩進むのを避ける。
+		/// </summary>
+		internal void NotifyMove(MoveDirection direction)
+		{
+			NotifyInputMode(FocusInputMode.Navigation);
+			if (direction != MoveDirection.None) { m_MoveRequested = true; }
+		}
+
+		private bool RestoreOnMove()
+		{
+			if (IsNavigationOccupied || InputMode != FocusInputMode.Navigation || !BindEventSystem() || m_Events.currentSelectedGameObject != null) { return false; }
+			Rebuild();
+			ResolveActive();
+			return Active != null && RequestRestore(Active);
 		}
 
 		private static bool KeepsPointerSelection(GameObject selected)
@@ -492,7 +518,8 @@ namespace UIControl
 						RememberNode(current);
 						return;
 					}
-					if (next == null) { next = Recover() ?? Restore(Active); }
+					// Restore On EmptyがOFFのScopeは、明示の要求が無ければ空のままにする。
+					if (next == null && (explicitRequest || Active.RestoreOnEmpty)) { next = Recover() ?? Restore(Active); }
 					selection = next != null ? next.gameObject : null;
 				}
 				if (selection != null && currentObject != selection) { m_Events.SetSelectedGameObject(selection); }

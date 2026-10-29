@@ -10,6 +10,8 @@ FocusScopeは登録されただけでは操作対象になりません。`Activa
 
 再び操作対象になった時は、`Restore Last`（既定ON）なら前回の選択、続いてInitial → Fallbacks → Hierarchy順の候補を選びます。Push型の画面を閉じると、前の画面の選択が戻ります。画面を作り直した場合は履歴を引き継ぎません。
 
+選択が空になった時や選択中の対象が無効になった時も、次の整合で同じ規則で戻します。選んだ後は何も光らせたくない画面では`Restore On Empty`（既定ON）をOFFにします。OFFのScopeは、次の方向入力か`Activate()` / `RequestSelect` / `RequestRestore()`まで空のままです。上の画面を閉じて戻った時も選択を戻しません。
+
 遷移中など一時的に操作できない間も所属は失わず、操作できるようになると同じ選択へ戻ります。管理中のSelectableは標準のNavigationを一時的にNoneにし、管理を離れると戻します。
 
 既定ではPointer方式の間は選択を持たず、マウスで押したボタンも選ばれません。マウスとPadを同時に使う画面では`Select On Pointer`をONにします。押した対象を選び、Pointer方式の間も選択を保ち、Navigationへ戻るとそこから続けます。PointerSelectionを使う場合は`Clear Selection On Pointer Move`をOFFにします。
@@ -22,6 +24,7 @@ FocusScopeは登録されただけでは操作対象になりません。`Activa
 | --- | --- |
 | `Current` / `Selected` | 現在の操作対象Scopeと選択 |
 | `NotifyInputMode` | Pointer / Navigationの通知。Pointer中は自動選択せず、Navigationへ戻ると復元する |
+| `NotifyMove(direction)` | 方向入力の通知。未選択ならそのフレームの終わりに復元する（uGUIは未選択の間Moveを送らない） |
 | `OccupyNavigation()` | 選択の移動と復元を止める。Drag中や遮断中に使う |
 | `TrySelectNearest(position, direction)` | 未選択時、画面座標に近い候補から選択を始める |
 | `Forget(rowRoot)` | 行の再利用前に、その配下の選択と履歴を忘れる |
@@ -54,7 +57,7 @@ ListNavigationResolverはScope内のNodeをHierarchy順に並べ、Vertical / Ho
 | マウスだけ | EventSystemとUI Input Module |
 | 入力方式をUIFocusへ伝えるだけ | InputSystemFocusInput |
 | マウス・Pad・仮想マウスの切り替え | InputSystemUIInputRouter + PointerSelection（+ VirtualMouseCursor + PointerFollower） |
-| 独自の入力元 | `IUIInputSource`を実装してPointerSelectionへ接続 |
+| 独自の入力元 | `IUIInputSource`を実装してPointerSelectionへ接続し、方向入力で`UIFocus.NotifyMove`を呼ぶ |
 
 ```text
 EventSystem
